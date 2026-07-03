@@ -1,0 +1,35 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/ai_companion?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: lchang0520
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:db/schema.sql
+
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**/*.xml
+  type-aliases-package: com.aicompanion.entity
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: auto
+
+jwt:
+  secret: AiCompanionSecretKeyThatIsLongEnoughForHS256AndVerySecure # 至少32个字符
+  expiration: 604800 # 7天 (7 * 24 * 60 * 60)
+
+dify:
+  chat:
+    api-key: app-eT1yt08WrPm8AIbuGiW18fE8
+    base-url: https://api.dify.ai/v1
+  workflow:
+    api-key: app-Gj8ae8HiHIYOIZZuklbZYkPH # 请替换为模拟面试工作流的 API Key
+    base-url: https://api.dify.ai/v1
