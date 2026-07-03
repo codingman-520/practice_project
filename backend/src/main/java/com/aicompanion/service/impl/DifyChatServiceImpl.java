@@ -32,9 +32,14 @@ public class DifyChatServiceImpl implements DifyChatService {
             requestDTO.setInputs(new HashMap<>());
         }
 
+        Long userId = com.aicompanion.common.UserContext.getUserId();
+        if (userId == null) {
+            throw new RuntimeException("未登录或 Token 无效");
+        }
+
         Map<String, Object> requestBody = new HashMap<>();
         requestBody.put("query", requestDTO.getQuery());
-        requestBody.put("user", requestDTO.getUser());
+        requestBody.put("user", userId.toString());
         requestBody.put("inputs", requestDTO.getInputs());
         // 确保使用同步阻塞请求模式
         requestBody.put("response_mode", "blocking");

@@ -29,4 +29,7 @@ public interface SkillTreeMapper extends BaseMapper<SkillTree> {
             "</where>" +
             "</script>")
     List<SkillTreeVO> selectSkillTreeWithStatus(@Param("userId") Long userId, @Param("category") String category);
+
+    @Select("SELECT name, category FROM skill_tree WHERE parent_id = 0")
+    List<java.util.Map<String, Object>> selectCategories();
 }

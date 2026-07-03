@@ -17,15 +17,22 @@ public class SkillTreeController {
 
     @GetMapping("/tree")
     public Result<List<SkillTreeVO>> getTree(
-            @RequestParam(required = false) Long userId,
             @RequestParam(value = "category", required = false) String category) {
+        Long userId = com.aicompanion.common.UserContext.getUserId();
         List<SkillTreeVO> tree = studentSkillService.getSkillTreeByCategory(userId, category);
         return Result.success(tree);
     }
 
     @PostMapping("/toggle/{id}")
-    public Result<Void> toggleSkillStatus(@RequestParam Long userId, @PathVariable("id") Long skillId) {
+    public Result<Void> toggleSkillStatus(@PathVariable("id") Long skillId) {
+        Long userId = com.aicompanion.common.UserContext.getUserId();
         studentSkillService.toggleSkillStatus(userId, skillId);
         return Result.success();
+    }
+
+    @GetMapping("/categories")
+    public Result<List<java.util.Map<String, String>>> getCategories() {
+        List<java.util.Map<String, String>> categories = studentSkillService.getCategories();
+        return Result.success(categories);
     }
 }

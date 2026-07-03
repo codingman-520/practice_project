@@ -63,6 +63,12 @@ public class InterviewServiceImpl implements InterviewService {
 
     @Override
     public InterviewQuestionVO submitAnswer(Long userId, InterviewAnswerDTO dto) {
+        // 校验会话所属权，防止越权操作
+        InterviewSession session = sessionMapper.selectById(dto.getSessionId());
+        if (session == null || !session.getUserId().equals(userId)) {
+            throw new RuntimeException("面试会话不存在或无权访问");
+        }
+
         // 1. 寻找当前正在回答的题目
         LambdaQueryWrapper<InterviewQuestion> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(InterviewQuestion::getSessionId, dto.getSessionId())

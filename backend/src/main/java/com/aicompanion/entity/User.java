@@ -24,7 +24,11 @@ public class User {
     
     private String password;
     
+    private String nickname;
+    
     private String role; // STUDENT 或 ADMIN
+    
+    private Integer status; // 0-禁用，1-启用
     
     private LocalDateTime createTime;
     

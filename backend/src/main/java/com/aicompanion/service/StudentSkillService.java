@@ -14,4 +14,6 @@ public interface StudentSkillService {
     List<SkillTreeVO> getSkillTreeByCategory(String category);
     
     void toggleSkillStatus(Long userId, Long skillId);
+
+    List<java.util.Map<String, String>> getCategories();
 }

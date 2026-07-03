@@ -36,9 +36,8 @@ public class StudentSkillServiceImpl implements StudentSkillService {
 
     @Override
     public List<SkillTreeVO> getSkillTreeByCategory(Long userId, String category) {
-        // 硬编码保底防御：防止前端漏传或未登录状态下参数为 null，导致 LEFT JOIN 匹配失败
         if (userId == null) {
-            userId = 1L; // 强行保底为当前测试的 1 号用户
+            throw new RuntimeException("未登录或 Token 无效");
         }
 
         // 1. 直接执行连表查询，获取带有 status 的扁平节点列表
@@ -106,5 +105,24 @@ public class StudentSkillServiceImpl implements StudentSkillService {
         for (SkillTreeVO childNode : childrenNodes) {
             buildChildNodes(childNode, allSkillVOs);
         }
+    }
+
+    @Override
+    public List<java.util.Map<String, String>> getCategories() {
+        List<java.util.Map<String, Object>> list = skillTreeMapper.selectCategories();
+        List<java.util.Map<String, String>> result = new java.util.ArrayList<>();
+        
+        java.util.Map<String, String> all = new java.util.HashMap<>();
+        all.put("name", "ALL");
+        all.put("code", "ALL");
+        result.add(all);
+        
+        for (java.util.Map<String, Object> map : list) {
+            java.util.Map<String, String> item = new java.util.HashMap<>();
+            item.put("name", (String) map.get("name"));
+            item.put("code", (String) map.get("category"));
+            result.add(item);
+        }
+        return result;
     }
 }

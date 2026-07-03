@@ -19,6 +19,8 @@ public class DifyChatController {
 
     @PostMapping
     public Result<DifyChatResponseVO> chat(@RequestBody DifyChatRequestDTO requestDTO) {
+        Long userId = com.aicompanion.common.UserContext.getUserId();
+        requestDTO.setUser(userId != null ? userId.toString() : null);
         DifyChatResponseVO responseVO = difyChatService.sendChatMessage(requestDTO);
         return Result.success(responseVO);
     }
