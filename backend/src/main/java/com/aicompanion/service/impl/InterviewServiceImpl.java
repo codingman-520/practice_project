@@ -171,26 +171,11 @@ public class InterviewServiceImpl implements InterviewService {
                 sessionMapper.updateById(session); // 更新数据库中的 score 和 feedback
                 return reportVO;
             }
+            throw new RuntimeException("Dify API 响应为空");
         } catch (Exception e) {
-            log.warn("调用 Dify API 生成报告失败，使用 Mock 兜底数据: {}", e.getMessage());
+            log.error("调用 Dify API 生成报告失败: {}", e.getMessage(), e);
+            throw new RuntimeException("生成面试报告失败: " + e.getMessage(), e);
         }
-
-        // Mock 兜底数据返回
-        Integer mockScore = 85;
-        String mockFeedback = "### AI 综合评估结果\n" +
-                              "1. **基础知识**：候选人对相关基础概念理解较好，作答思路清晰。\n" +
-                              "2. **实战经验**：对于复杂场景的边界条件考虑不够全面，建议加强工程实践。\n" +
-                              "3. **表达能力**：沟通顺畅，逻辑严密。\n" +
-                              "**综合建议**：可以多关注底层的源码实现和线上性能排查工具。";
-        session.setScore(mockScore);
-        session.setFeedback(mockFeedback);
-        sessionMapper.updateById(session);
-        return InterviewReportVO.builder()
-                .sessionId(session.getId())
-                .jobPosition(session.getJobPosition())
-                .score(mockScore)
-                .feedback(mockFeedback)
-                .build();
     }
 
     private InterviewReportVO parseDifyResponse(Map<String, Object> responseBody, InterviewSession session) {
