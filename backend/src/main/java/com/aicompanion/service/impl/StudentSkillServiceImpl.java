@@ -17,9 +17,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+
 @Service
 @RequiredArgsConstructor
-public class StudentSkillServiceImpl implements StudentSkillService {
+public class StudentSkillServiceImpl extends ServiceImpl<SkillTreeMapper, SkillTree> implements StudentSkillService {
 
     private final SkillTreeMapper skillTreeMapper;
     private final UserSkillMapper userSkillMapper;
@@ -75,6 +77,20 @@ public class StudentSkillServiceImpl implements StudentSkillService {
                          .set(UserSkill::getLearnedAt, nextStatus == 2 ? LocalDateTime.now() : null);
                          
             userSkillMapper.update(null, updateWrapper);
+            
+            // Generate a learning record when a skill is mastered
+            if (nextStatus == 2) {
+                com.aicompanion.entity.SkillTree skill = skillTreeMapper.selectById(skillId);
+                if (skill != null) {
+                    com.aicompanion.entity.LearningRecord record = com.aicompanion.entity.LearningRecord.builder()
+                            .userId(userId)
+                            .skillName(skill.getName())
+                            .content("通过APP端技能树点亮了【" + skill.getName() + "】技能。")
+                            .duration(new java.util.Random().nextInt(60) + 30) // Random duration 30-90 min
+                            .build();
+                    com.aicompanion.common.SpringContextHolder.getBean(com.aicompanion.mapper.LearningRecordMapper.class).insert(record);
+                }
+            }
         }
     }
 
@@ -124,5 +140,35 @@ public class StudentSkillServiceImpl implements StudentSkillService {
             result.add(item);
         }
         return result;
+    }
+
+    @Override
+    public void addSkillNode(SkillTree skillTree) {
+        if (skillTree.getParentId() == null) {
+            skillTree.setParentId(0L);
+        }
+        this.save(skillTree);
+    }
+
+    @Override
+    public void updateSkillNode(SkillTree skillTree) {
+        this.updateById(skillTree);
+    }
+
+    @Override
+    public void deleteSkillNode(Long id) {
+        // Recursive delete children
+        deleteChildren(id);
+        this.removeById(id);
+    }
+
+    private void deleteChildren(Long parentId) {
+        LambdaQueryWrapper<SkillTree> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SkillTree::getParentId, parentId);
+        List<SkillTree> children = this.list(queryWrapper);
+        for (SkillTree child : children) {
+            deleteChildren(child.getId());
+            this.removeById(child.getId());
+        }
     }
 }

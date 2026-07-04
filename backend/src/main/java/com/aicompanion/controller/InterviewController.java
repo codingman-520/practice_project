@@ -39,4 +39,10 @@ public class InterviewController {
         InterviewReportVO vo = interviewService.getInterviewReport(userId, sessionId);
         return Result.success(vo);
     }
+
+    @GetMapping("/history")
+    public Result<java.util.List<com.aicompanion.entity.InterviewSession>> getInterviewHistory() {
+        Long userId = com.aicompanion.common.UserContext.getUserId();
+        return Result.success(interviewService.getInterviewHistory(userId));
+    }
 }

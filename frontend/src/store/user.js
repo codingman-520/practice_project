@@ -2,10 +2,23 @@ import { defineStore } from 'pinia';
 import { login as loginApi } from '../api/auth';
 
 export const useUserStore = defineStore('user', {
-  state: () => ({
-    token: localStorage.getItem('token') || '',
-    userInfo: JSON.parse(localStorage.getItem('userInfo')) || null
-  }),
+  state: () => {
+    let parsedUserInfo = null;
+    try {
+      const userInfoStr = localStorage.getItem('userInfo');
+      if (userInfoStr && userInfoStr !== 'undefined') {
+        parsedUserInfo = JSON.parse(userInfoStr);
+      }
+    } catch (e) {
+      console.error('Failed to parse userInfo from localStorage', e);
+      localStorage.removeItem('userInfo');
+    }
+    
+    return {
+      token: localStorage.getItem('token') || '',
+      userInfo: parsedUserInfo
+    };
+  },
   actions: {
     login(username, password) {
       return loginApi(username, password).then(res => {

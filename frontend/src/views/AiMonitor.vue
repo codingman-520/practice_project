@@ -214,8 +214,8 @@ const handleSend = async () => {
     const res = await sendChatMessage(userText);
     chatList.value[aiThinkingIndex] = {
       role: 'ai',
-      text: res.data.reply,
-      time: res.data.timestamp || new Date().toLocaleTimeString(),
+      text: res.data.answer,
+      time: res.data.create_at ? new Date(res.data.create_at * 1000).toLocaleTimeString() : new Date().toLocaleTimeString(),
       loading: false
     };
   } catch (error) {

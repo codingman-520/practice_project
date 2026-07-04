@@ -75,3 +75,20 @@ CREATE TABLE IF NOT EXISTS `interview_question` (
     `user_answer` TEXT COMMENT '用户作答文本',
     `score` INT COMMENT '单题得分'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='面试题目关联表';
+
+CREATE TABLE IF NOT EXISTS `learning_record` (
+    `id` BIGINT AUTO_INCREMENT PRIMARY KEY COMMENT '记录唯一标识',
+    `user_id` BIGINT NOT NULL COMMENT '学习者用户ID',
+    `skill_name` VARCHAR(100) NOT NULL COMMENT '技能名称',
+    `content` TEXT NOT NULL COMMENT '学习日记正文',
+    `duration` INT DEFAULT 0 COMMENT '学习耗时(分钟)',
+    `create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='学习记录表';
+
+INSERT IGNORE INTO `learning_record` (`id`, `user_id`, `skill_name`, `content`, `duration`) VALUES
+(10001, 3, 'Composition API', '今天系统学习了 Vue 3 的 Composition API，深入理解了 ref 与 reactive 的底层 proxy 机制，并比较了它们的区别与使用场景，做了一些基本的 todo demo。', 120),
+(10002, 4, 'TypeScript', '学习了 TypeScript 的 Interface 接口以及 Type 类型别名的区别，了解了范型 (Generics) 的用法，对于强类型的定义有了一定掌握。', 90),
+(10003, 3, 'Spring Boot 3', '配置了 Spring Boot 的开发环境，编写了第一个 RESTful API，掌握了 @RestController, @GetMapping 等常用注解。', 150),
+(10004, 5, 'MySQL', '练习了 SQL 常用的聚合函数如 GROUP BY 以及连接查询 JOIN，对索引的创建和慢查询优化也做了一些深入了解。', 80),
+(10005, 4, 'Docker', '成功编写了 Dockerfile，并将 Vue 静态项目打包成 Nginx 镜像并进行本地容器化部署。理解了 Volume 挂载和 Port 映射。', 110),
+(10006, 6, '简历优化', '通过 AI 诊断功能对原有的简历进行了全面体检，重点修正了项目成果描述部分，引入了 STAR 原则进行了定量化表达。', 45);
