@@ -15,6 +15,7 @@ D:\LEARNING\Java\ai_companion\practice-project\practice_project\backend\src\main
 D:\LEARNING\Java\ai_companion\practice-project\practice_project\backend\src\main\java\com\aicompanion\vo\InterviewQuestionVO.java
 D:\LEARNING\Java\ai_companion\practice-project\practice_project\backend\src\main\java\com\aicompanion\mapper\UserMapper.java
 D:\LEARNING\Java\ai_companion\practice-project\practice_project\backend\src\main\java\com\aicompanion\service\impl\DifyChatServiceImpl.java
+D:\LEARNING\Java\ai_companion\practice-project\practice_project\backend\src\main\java\com\aicompanion\controller\AdminInterviewController.java
 D:\LEARNING\Java\ai_companion\practice-project\practice_project\backend\src\main\java\com\aicompanion\service\impl\StudentSkillServiceImpl.java
 D:\LEARNING\Java\ai_companion\practice-project\practice_project\backend\src\main\java\com\aicompanion\entity\UserSkill.java
 D:\LEARNING\Java\ai_companion\practice-project\practice_project\backend\src\main\java\com\aicompanion\service\DashboardService.java
@@ -47,6 +48,7 @@ D:\LEARNING\Java\ai_companion\practice-project\practice_project\backend\src\main
 D:\LEARNING\Java\ai_companion\practice-project\practice_project\backend\src\main\java\com\aicompanion\dto\InterviewStartDTO.java
 D:\LEARNING\Java\ai_companion\practice-project\practice_project\backend\src\main\java\com\aicompanion\controller\UserController.java
 D:\LEARNING\Java\ai_companion\practice-project\practice_project\backend\src\main\java\com\aicompanion\entity\User.java
+D:\LEARNING\Java\ai_companion\practice-project\practice_project\backend\src\main\java\com\aicompanion\config\MybatisPlusConfig.java
 D:\LEARNING\Java\ai_companion\practice-project\practice_project\backend\src\main\java\com\aicompanion\mapper\LearningRecordMapper.java
 D:\LEARNING\Java\ai_companion\practice-project\practice_project\backend\src\main\java\com\aicompanion\config\SecurityConfig.java
 D:\LEARNING\Java\ai_companion\practice-project\practice_project\backend\src\main\java\com\aicompanion\config\SwaggerConfig.java

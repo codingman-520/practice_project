@@ -31,6 +31,7 @@ com\aicompanion\dto\UserLoginDTO.class
 com\aicompanion\controller\AdminRecordController.class
 com\aicompanion\vo\SkillTreeVO$SkillTreeVOBuilder.class
 com\aicompanion\controller\InterviewController.class
+com\aicompanion\config\MybatisPlusConfig.class
 com\aicompanion\config\DifyConfig.class
 com\aicompanion\service\impl\DashboardServiceImpl.class
 com\aicompanion\vo\LoginVO.class
@@ -62,6 +63,7 @@ com\aicompanion\entity\InterviewQuestion.class
 com\aicompanion\interceptor\JwtInterceptor.class
 com\aicompanion\mapper\InterviewSessionMapper.class
 com\aicompanion\common\SpringContextHolder.class
+com\aicompanion\controller\AdminInterviewController.class
 com\aicompanion\entity\User$UserBuilder.class
 com\aicompanion\vo\DifyChatResponseVO$DifyChatResponseVOBuilder.class
 com\aicompanion\config\WebMvcConfig.class

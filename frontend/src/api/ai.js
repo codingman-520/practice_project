@@ -36,10 +36,10 @@ export const startMockInterview = async (skillId) => {
   };
 };
 
-export const getInterviewHistory = () => {
-  return request.get('/interview/history');
+export const getAdminInterviewHistory = (params) => {
+  return request.get('/admin/interviews/history', { params });
 };
 
-export const getInterviewReport = (id) => {
-  return request.get(`/interview/${id}/report`);
+export const getAdminInterviewReport = (sessionId) => {
+  return request.get(`/admin/interviews/report/${sessionId}`);
 };

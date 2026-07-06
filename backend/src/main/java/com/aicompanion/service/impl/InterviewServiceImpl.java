@@ -242,6 +242,30 @@ public class InterviewServiceImpl implements InterviewService {
         return sessionMapper.selectList(queryWrapper);
     }
 
+    @Override
+    public com.baomidou.mybatisplus.extension.plugins.pagination.Page<InterviewSession> getGlobalInterviewHistory(Integer page, Integer size) {
+        com.baomidou.mybatisplus.extension.plugins.pagination.Page<InterviewSession> pageParam = 
+                new com.baomidou.mybatisplus.extension.plugins.pagination.Page<>(page, size);
+        LambdaQueryWrapper<InterviewSession> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.orderByDesc(InterviewSession::getId);
+        return sessionMapper.selectPage(pageParam, queryWrapper);
+    }
+
+    @Override
+    public InterviewReportVO getGlobalInterviewReport(Long sessionId) {
+        InterviewSession session = sessionMapper.selectById(sessionId);
+        if (session == null) {
+            throw new RuntimeException("面试会话不存在");
+        }
+
+        return InterviewReportVO.builder()
+                .sessionId(session.getId())
+                .jobPosition(session.getJobPosition())
+                .score(session.getScore())
+                .feedback(session.getFeedback())
+                .build();
+    }
+
     private InterviewQuestionVO getNextQuestion(Long sessionId) {
         LambdaQueryWrapper<InterviewQuestion> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(InterviewQuestion::getSessionId, sessionId)

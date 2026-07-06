@@ -13,4 +13,8 @@ public interface InterviewService {
     InterviewQuestionVO submitAnswer(Long userId, InterviewAnswerDTO dto);
     InterviewReportVO getInterviewReport(Long userId, Long sessionId);
     List<InterviewSession> getInterviewHistory(Long userId);
+    
+    // For Admin Web
+    com.baomidou.mybatisplus.extension.plugins.pagination.Page<InterviewSession> getGlobalInterviewHistory(Integer page, Integer size);
+    InterviewReportVO getGlobalInterviewReport(Long sessionId);
 }
